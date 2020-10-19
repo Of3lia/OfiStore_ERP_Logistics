@@ -9,49 +9,66 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-  rootURL = 'https://localhost:44369/api/user';
-  public list : UserModel[];
-  selectedRole : Role = Role.Customer;
-  orderBy;
+  rootURL = 'https://localhost:44369/api/users';
+  public list : UserModel[] = [];
+  selectedRole : Role = Role.All;
+  searchUserName = "";  
+  // skip and take are used for pagination
+  skip = 0;
+  take = 10;
+  currentPage = 1;
+  editIndex: number;
 
   constructor(
     private http: HttpClient
   ) 
   { }
 
+  asd(id){
+    window.alert(id);
+  }
+
   ngOnInit(): void {
     this.refreshList();
   }
 
   refreshList(){
-
     var body = {
-      role : this.selectedRole
+      Role : this.selectedRole,
+      SearchUserName : this.searchUserName,
+      Skip : this.skip,
+      Take : this.take
     }
 
-    this.http.post(this.rootURL, body)
+    this.http.post(this.rootURL + "/GetUsersList", body)
     .toPromise()
     .then(res => this.list = res as UserModel[]);
   }
 
-  asd(){
-    window.alert(this.selectedRole);
+  changeRole(){
+    this.currentPage=1;
+    this.skip=0
+    this.refreshList();
   }
 
-  // getUsers(){
-  //   var body = {
-  //     UserName: this.formModel.value.UserName,
-  //     Email: this.formModel.value.Email,
-  //     FullName: this.formModel.value.FullName,
-  //     Password: this.formModel.value.Passwords.Password,
-  //   };
-  //   return this.http.post(this.BaseURI + '/ApplicationUser/Register', body);
-  // }
+  nextPage(){
+    this.skip += 10;
+    this.currentPage++;
+    this.refreshList();
+  }
+
+  lastPage(){
+    this.skip -= 10;
+    this.currentPage--;
+    this.refreshList();
+  }
+
+
 }
 class UserModel{
     userName = Text;
 }
 
 enum Role{
-  Admin, Employee, Customer
+  Admin, Employee, Customer, All
 }

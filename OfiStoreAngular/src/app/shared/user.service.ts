@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 })
 export class UserService {
 
-  readonly BaseURI: string = 'https://localhost:44369/api';
+  public readonly BaseURI: string = 'https://localhost:44369/api';
 
   constructor(
     private fb:FormBuilder,
@@ -52,6 +52,14 @@ export class UserService {
 
   getUserProfile(){
     return this.http.get(this.BaseURI + '/UserProfile');
+  }
+
+  editUserProfile(){
+    //return this.http.put(this.BaseURI + '/')
+  }
+
+  getAddress(id: number){
+    return this.http.get(this.BaseURI + '/addresses/' + id);
   }
 
   roleMatch(allowedRoles): boolean {
