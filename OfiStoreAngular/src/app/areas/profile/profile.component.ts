@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from './../../shared/user.service';
+import { UserModel, AddressModel } from './../../shared/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -12,11 +13,8 @@ import { UserService } from './../../shared/user.service';
 })
 export class ProfileComponent implements OnInit {
 
-  userDetails;
   edit : boolean = false;
-  _editAddress:boolean = false;
-  userData: UserModel;
-  address: AddressModel;
+ // _editAddress:boolean = false;
 
   constructor(
     private router:Router,
@@ -27,8 +25,8 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.service.getUserProfile().subscribe(
       res => { 
-        this.userDetails = res;
-        this.address = this.userDetails.address;
+        this.service.userDownloadedData = res;
+       // this.address = this.userDetails.address;
       },
       err => {
         console.log(err);
@@ -37,7 +35,7 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile(){
-    this.userData = this.userDetails;
+    //this.userData = this.userDetails;
     this.edit = true;
   }
 
@@ -49,71 +47,40 @@ export class ProfileComponent implements OnInit {
     if(form.invalid){
       return;
     }
-    this.putProfile().subscribe(
+    this.service.putUser().subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         window.location.reload();
       },
       err => {
         console.log(err);
       }
     )
-  }
-
-  putProfile(){
-    console.log(this.userData);
-    return this.http.put(this.service.BaseURI + "/users", this.userData);
   }
 
   //Address
   
-  editAddress(){
-    this.userData = this.userDetails;
-    this._editAddress = true;
-  }
+  // editAddress(){
+  //   this.userData = this.userDetails;
+  //   this._editAddress = true;
+  // }
 
-  updateAddress(form:NgForm){
-    if(form.invalid){
-      return;
-    }
-    this.putAddress().subscribe(
-      res => {
-        console.log(res);
-        window.location.reload();
-      },
-      err => {
-        console.log(err);
-      }
-    )
-  }
+  // updateAddress(form:NgForm){
+  //   if(form.invalid){
+  //     return;
+  //   }
+  //   this.putAddress().subscribe(
+  //     res => {
+  //       console.log(res);
+  //       window.location.reload();
+  //     },
+  //     err => {
+  //       console.log(err);
+  //     }
+  //   )
+  // }
 
-  putAddress(){
-    return this.http.put(this.service.BaseURI + "/addresses/" + this.address.id , this.address);
-  }
-}
-
-class UserModel{
-  id:string = '';
-  userName: string = '';
-  fullName?: string = '';
-  email?:string = '';
-  address: AddressModel = {
-    id : '',
-    street : '',
-    streetNumber : undefined,
-    door : '',
-    city : '',
-    country : '',
-    postalCode : '',
-  };
-}
-
-class AddressModel{
-  id:string = '';
-  street?: string = '';
-  streetNumber?: number = undefined;
-  door?:string = '';
-  city?:string = '';
-  country?:string = '';
-  postalCode?:string = '';
+  // putAddress(){
+  //   return this.http.put(this.service.BaseURI + "/addresses/" + this.address.id , this.address);
+  // }
 }

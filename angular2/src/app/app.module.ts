@@ -12,14 +12,13 @@ import { LoginComponent } from './user/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
-import { ProfileComponent } from './areas/profile/profile.component';
 import { ClientAreaComponent } from './areas/client-area/client-area.component';
 import { WorkAreaComponent } from './areas/work-area/work-area.component';
 import { AdminAreaComponent } from './areas/admin-area/admin-area.component';
-import { UsersComponent } from './areas/admin-area/users/users.component';
-import { StoreComponent } from './areas/client-area/store/store.component';
 import { CartComponent } from './areas/client-area/cart/cart.component';
+import { ProfileComponent } from './areas/profile/profile.component';
+import { AddressComponent } from './areas/profile/address/address.component';
+import { StoreComponent } from './areas/store/store.component';
 
 @NgModule({
   declarations: [
@@ -29,14 +28,13 @@ import { CartComponent } from './areas/client-area/cart/cart.component';
     LoginComponent,
     HomeComponent,
     ForbiddenComponent,
-    AdminPanelComponent,
-    ProfileComponent,
     ClientAreaComponent,
     WorkAreaComponent,
     AdminAreaComponent,
-    UsersComponent,
+    CartComponent,
+    ProfileComponent,
+    AddressComponent,
     StoreComponent,
-    CartComponent
   ],
   imports: [
     BrowserModule,

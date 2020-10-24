@@ -11,6 +11,8 @@ import { ProfileComponent } from './areas/profile/profile.component';
 import { ClientAreaComponent } from './areas/client-area/client-area.component';
 import { WorkAreaComponent } from './areas/work-area/work-area.component';
 import { AdminAreaComponent } from './areas/admin-area/admin-area.component';
+import { StoreComponent } from './areas/client-area/store/store.component';
+import { CartComponent } from './areas/client-area/cart/cart.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'/user/login', pathMatch:'full'},
@@ -23,7 +25,10 @@ const routes: Routes = [
   },
   {path:'home',component:HomeComponent, canActivate:[AuthGuard], children:[
     {path:'profile',component:ProfileComponent},
-    {path:'client-area',component:ClientAreaComponent},
+    {path:'client-area',component:ClientAreaComponent, children:[
+      {path:'store', component:StoreComponent},
+      {path:'cart', component:CartComponent}
+    ]},
     {path:'work-area',component:WorkAreaComponent},
     {path:'admin-area',component:AdminAreaComponent, canActivate:[AuthGuard], data : {permittedRoles: ['Admin']}}
   ]},

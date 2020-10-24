@@ -2,20 +2,17 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { GeneralService } from './general.service';
-import { UserModel } from './user.model';
+import { UserModel } from './models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  userData: UserModel;
-  userDownloadedData;
-
   constructor(
     private fb:FormBuilder,
     private http:HttpClient,
-    private service: GeneralService
+    private generalService:GeneralService,
   ) { }
 
   formModel = this.fb.group({
@@ -47,19 +44,11 @@ export class UserService {
       FullName: this.formModel.value.FullName,
       Password: this.formModel.value.Passwords.Password,
     };
-    return this.http.post(this.service.BaseURI + '/ApplicationUser/Register', body);
+    return this.http.post(this.generalService.BaseURI + '/ApplicationUser/Register', body);
   }
 
   login(formData){
-    return this.http.post(this.service.BaseURI + '/ApplicationUser/Login', formData);
-  }
-
-  getUserProfile(){
-    return this.http.get(this.service.BaseURI + '/UserProfile');
-  }
-
-  putUser(){
-    return this.http.put(this.service.BaseURI + "/users", this.userData);
+    return this.http.post(this.generalService.BaseURI + '/ApplicationUser/Login', formData);
   }
 
   roleMatch(allowedRoles): boolean {

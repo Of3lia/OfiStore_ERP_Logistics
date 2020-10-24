@@ -1,0 +1,11 @@
+<!-- <a routerLink="/adminpanel">Admin Panel</a> -->
+
+<button (click)="onLogout()">Logout</button>
+
+<h2 routerLink="/home/store" routerLinkActive="active">Store</h2>
+<h2 routerLink="/home/profile" routerLinkActive="active">Profile</h2>
+<h2 routerLink="/home/client-area" routerLinkActive="active">Client Area</h2>
+<h2 routerLink="/home/work-area" routerLinkActive="active" *ngIf='this.role=="Admin" || this.role=="Employee"'>Work Area</h2>
+<h2 routerLink="/home/admin-area" routerLinkActive="active" *ngIf='this.role=="Admin"'>Admin Area</h2>
+
+<router-outlet></router-outlet>

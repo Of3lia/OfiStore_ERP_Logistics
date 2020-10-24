@@ -1,0 +1,8 @@
+<div *ngFor="let product of service.products">
+    <h3>{{product.name}}</h3>
+    <p>{{product.description}}</p>
+    <p>{{product.price | currency}}</p>
+    <p>Category: {{product.categoryString}}</p>
+    <p>Quantity: <input type="number" #quantity value="1" required min="1">
+    <button type="button" (click)="addProductToCart(product, quantity.value)">Add to Cart</button></p>
+</div>

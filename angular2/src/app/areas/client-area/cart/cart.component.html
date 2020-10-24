@@ -1,0 +1,18 @@
+<div *ngFor="let order of service.orders">
+    <h3>Order Id: #{{order.id}}</h3>
+    <h3>Order State: {{order.state}}</h3>
+    <div *ngFor="let prod of order.orderProducts">
+        <h4>Product Id {{prod.product.id}}</h4>
+        <h4>Product Name {{prod.product.name}}</h4>
+        <p>Description {{prod.product.description}}</p>
+        <p>Price {{prod.product.price | currency}}</p>
+        <p [hidden]="order.state=='Unrealized'">Quantity: {{prod.quantity}}</p>
+        <p [hidden]="order.state!='Unrealized'">Quantity: <input type="number" #quantity
+             value={{prod.quantity}} required min="1"> 
+        <button type="button" (click)="updateCart(prod.product, quantity.value)">Update</button>
+        <button type="button" (click)="removeProduct(prod.id)">Remove Product</button></p> 
+    </div>
+    <div *ngIf="order.state=='Unrealized'"><button type="button" (click)="sendOrder(order)">Send Order!</button></div>
+    <div *ngIf="order.state=='Pending'"><button type="button" (click)="cancelOrder(order)">Cancel And Edit Order</button></div>
+    <div *ngIf="order.state=='Pending' || order.state=='Unrealized'"><button type="button" (click)="deleteOrder(order.id)">Delete Order</button></div>
+</div>

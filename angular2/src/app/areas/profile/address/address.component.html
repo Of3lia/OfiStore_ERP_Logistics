@@ -1,0 +1,26 @@
+    <ng-template [ngIf]="edit==false">
+        <ul>
+            <li>Id: {{service.address.id}} </li>
+            <li>Street: {{service.address.street}} </li>
+            <li>Street Number:  {{service.address.streetNumber}}</li>
+            <li>Door:  {{service.address.door}}</li>
+            <li>City:  {{service.address.city}}</li>
+            <li>Country:  {{service.address.country}}</li>
+            <li>Postal Code:  {{service.address.postalCode}}</li>
+            <button (click)="editAddress()">Edit Address</button>
+        </ul>
+    </ng-template>
+    <ng-template [ngIf]="edit==true">
+        <form #form="ngForm" (submit)="updateAddress(form)">
+            <ul>
+                <li>Street: <input placeholder="Street" value="{{service.address.street}}" name="street" #street="ngModel" [(ngModel)]="service.address.street" required></li>
+                <li>Street Number: <input placeholder="Street Number" value="{{service.address.streetNumber}}" type="number" name="streetNumber" #streetNumber="ngModel" [(ngModel)]="service.address.streetNumber" required></li>
+                <li>Door: <input placeholder="door" value="{{service.address.door}}" name="door" #door="ngModel" [(ngModel)]="service.address.door"></li>
+                <li>City: <input placeholder="city" value="{{service.address.city}}" name="city" #city="ngModel" [(ngModel)]="service.address.city" required></li>
+                <li>Country: <input placeholder="country" value="{{service.address.country}}" name="country" #country="ngModel" [(ngModel)]="service.address.country" required></li>
+                <li>Postal Code: <input placeholder="postalCode" value="{{service.address.postalCode}}" name="postalCode" #postalCode="ngModel" [(ngModel)]="service.address.postalCode" required></li>
+                <button type="submit" [disabled]="form.invalid">Save</button>
+                <button (click)="edit=false" type="button">Cancel</button>
+            </ul>
+        </form>
+    </ng-template>
