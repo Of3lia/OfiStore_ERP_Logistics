@@ -1,0 +1,31 @@
+<p  *ngIf="service.order==null" >No orders
+<button type="button" (click)="assignOrderToEmployee()">Take New Order</button></p>
+
+
+<div *ngIf='service.order!=null'>
+    <h3>Order Id: #{{service.order.id}}</h3>
+    <p>Order State: {{service.order.state}}</p>
+    <p>Date Started: {{service.order.dateStarted}}</p>
+    <h3>Products:</h3>
+    <div *ngFor="let product of service.products">
+        <p>Id: {{product.product.id}}</p>
+        <p>Product Name: {{product.product.name}}</p>
+        <p>Quantity: {{product.quantity}}</p>
+    </div>
+
+    <button *ngIf="service.order.state=='Attending'" type="button">Cancel Order</button>
+    <button *ngIf="service.order.state=='Attending'" type="button">Deliver!</button>
+    <button *ngIf="service.order.state=='Delivering'" type="button">Finished</button>
+
+    <h4>Client Information:</h4>
+    <p>Name: {{service.order.orderClient.client.userName}}</p>
+    <p>Email: {{service.order.orderClient.client.email}}</p>
+    <p>Phone Number: {{service.order.orderClient.client.phoneNumber}}</p>
+    <h5>Address:</h5>
+    <p>Street Number: {{service.order.orderClient.client.address.streetNumber}}</p>
+    <p>Street: {{service.order.orderClient.client.address.street}}</p>
+    <p>Door: {{service.order.orderClient.client.address.door}}</p>
+    <p>City: {{service.order.orderClient.client.address.city}}</p>
+    <p>Country: {{service.order.orderClient.client.address.country}}</p>
+    <p>Postal Code: {{service.order.orderClient.client.address.postalCode}}</p>
+</div>

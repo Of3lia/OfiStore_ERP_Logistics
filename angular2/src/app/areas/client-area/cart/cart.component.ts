@@ -22,8 +22,10 @@ export class CartComponent implements OnInit {
     this.service.getOrders().subscribe(
       res =>{
         this.service.orders = res;
+        try{
         this.service.products = this.service.orders[0].orderProducts;
-
+        } catch{}
+       
         this.service.orders.forEach(element => {
           element.state = OrderState[element.state];
         });

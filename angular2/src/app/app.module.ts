@@ -19,6 +19,8 @@ import { CartComponent } from './areas/client-area/cart/cart.component';
 import { ProfileComponent } from './areas/profile/profile.component';
 import { AddressComponent } from './areas/profile/address/address.component';
 import { StoreComponent } from './areas/store/store.component';
+import { HistorialComponent } from './areas/work-area/historial/historial.component';
+import { OrderComponent } from './areas/work-area/order/order.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { StoreComponent } from './areas/store/store.component';
     ProfileComponent,
     AddressComponent,
     StoreComponent,
+    HistorialComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,

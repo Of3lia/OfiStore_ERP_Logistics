@@ -4,3 +4,7 @@ body {background-color: rgb(175, 166, 166);}
 .ng-invalid{
     border-color: red;
 }
+
+.active{
+    color: rgb(0, 26, 255);
+}

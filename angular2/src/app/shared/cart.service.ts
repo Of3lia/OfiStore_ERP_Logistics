@@ -17,7 +17,7 @@ export class CartService {
   ) { }
 
   getOrders(){
-    return this.http.get(this.generalService.BaseURI + '/OrderProducts/GetProductOrders');
+    return this.http.get(this.generalService.BaseURI + '/Orders/GetOrderByClient');
   }
 
   sendOrder(order: OrderModel){
@@ -25,12 +25,12 @@ export class CartService {
       id: order.id,
       state: order.state
     };
-    return this.http.put(this.generalService.BaseURI + '/OrderProducts/ChangeOrderState', body);
+    return this.http.put(this.generalService.BaseURI + '/Orders/ChangeOrderState', body);
   }
 
   deleteOrder(orderId: number){
     var body = { id: orderId}
-    return this.http.post(this.generalService.BaseURI + '/OrderProducts/DeleteOrder', body)
+    return this.http.post(this.generalService.BaseURI + '/Orders/DeleteOrder', body)
   }
 
    removeProduct(productId: number){
