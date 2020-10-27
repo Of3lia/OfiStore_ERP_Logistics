@@ -21,6 +21,7 @@ import { AddressComponent } from './areas/profile/address/address.component';
 import { StoreComponent } from './areas/store/store.component';
 import { HistorialComponent } from './areas/work-area/historial/historial.component';
 import { OrderComponent } from './areas/work-area/order/order.component';
+import { AllUsersComponent } from './areas/admin-area/all-users/all-users.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { OrderComponent } from './areas/work-area/order/order.component';
     StoreComponent,
     HistorialComponent,
     OrderComponent,
+    AllUsersComponent,
   ],
   imports: [
     BrowserModule,

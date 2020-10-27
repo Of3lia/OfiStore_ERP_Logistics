@@ -45,4 +45,23 @@ export class ProfileService {
   putAddress(){
     return this.http.put(this.generalService.BaseURI + "/addresses/" + this.address.id , this.address);
   }
+
+  // Admin-Panel
+
+  editUser(user:UserModel){
+    var body = {
+      id : user.id,
+      userName : user.userName,
+      fullName : user.fullName,
+      email : user.email,
+      role: user.role,
+    }
+    return this.http.put(this.generalService.BaseURI + "/users", body);
+  }
+
+  deleteUser(id:string){
+    window.alert(id);
+    return this.http.delete(this.generalService.BaseURI + "/users/" + id);
+  }
+
 }

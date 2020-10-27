@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { GeneralService } from './general.service';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { OrderModel } from 'src/app/shared/models/order.model';
+import { GeneralService } from './general.service';
+import { OrderModel } from './../shared/models/order.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
+export class OrderService {
 
+  order;
   orders;
   products;
-
   constructor(
     public generalService: GeneralService,
     private http: HttpClient,
@@ -20,7 +20,7 @@ export class CartService {
     return this.http.get(this.generalService.BaseURI + '/Orders/GetOrderByClient');
   }
 
-  sendOrder(order: OrderModel){
+  changeOrderState(order: OrderModel){
     var body = { 
       id: order.id,
       state: order.state
@@ -33,8 +33,16 @@ export class CartService {
     return this.http.post(this.generalService.BaseURI + '/Orders/DeleteOrder', body)
   }
 
-   removeProduct(productId: number){
-    var body = { id: productId}
-    return this.http.post(this.generalService.BaseURI + '/OrderProducts/RemoveProduct', body)
+  // Work-Area
+  getOrder(){
+    return this.http.get(this.generalService.BaseURI + '/Orders/GetOrderByEmployee');
+  }
+
+  assignOrderToEmployee(){
+    return this.http.get(this.generalService.BaseURI + '/Orders/AssignOrderToEmployee');
+  }
+
+  getOrderHistorialEmployee(){
+    return this.http.get(this.generalService.BaseURI + '/Orders/GetOrderHistorialEmployee');
   }
 }

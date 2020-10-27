@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { GeneralService } from './general.service';
-import { HttpClient } from "@angular/common/http";
 import { ProductModel } from './models/product.model';
-import { ProductCategories } from './../shared/enums/ProductCategories';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StoreService {
+export class ProductService {
 
-  products;
-
+  products; 
+  
   constructor(
-    private http:HttpClient,
-    private generalService:GeneralService,
+    public generalService: GeneralService,
+    private http: HttpClient,
   ) { }
+
+  removeProduct(productId: number){
+    var body = { id: productId}
+    return this.http.post(this.generalService.BaseURI + '/OrderProducts/RemoveProduct', body)
+  }
 
   addProductToCart(product:ProductModel, quantity:number){
     var body = {

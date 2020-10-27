@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from './../../../shared/cart.service'
 import { OrderState } from './../../../shared/enums/OrderState'
-import { StoreService } from './../../../shared/store.service';
+import { OrderService } from './../../../shared/order.service';
+import { ProductService } from './../../../shared/product.service';
 import { ProductModel } from 'src/app/shared/models/product.model';
 import { ProductCategories } from 'src/app/shared/enums/ProductCategories';
 import { OrderModel } from 'src/app/shared/models/order.model';
@@ -14,19 +14,19 @@ import { OrderModel } from 'src/app/shared/models/order.model';
 export class CartComponent implements OnInit {
 
   constructor(
-    public service: CartService,
-    public storeService: StoreService
+    public orderService: OrderService,
+    public productService: ProductService,
   ) { }
 
   ngOnInit(): void {
-    this.service.getOrders().subscribe(
+    this.orderService.getOrders().subscribe(
       res =>{
-        this.service.orders = res;
+        this.orderService.orders = res;
         try{
-        this.service.products = this.service.orders[0].orderProducts;
+        this.orderService.products = this.orderService.orders[0].orderProducts;
         } catch{}
        
-        this.service.orders.forEach(element => {
+        this.orderService.orders.forEach(element => {
           element.state = OrderState[element.state];
         });
       },
@@ -37,10 +37,10 @@ export class CartComponent implements OnInit {
   }
 
   updateCart(product:ProductModel, quantity: number){
-    this.storeService.addProductToCart(product, quantity).subscribe(
+    this.productService.addProductToCart(product, quantity).subscribe(
       res => { 
         window.alert("Cart Updated");
-        this.service.products = res;
+        this.orderService.products = res;
       },
       err => {
         console.log(err);
@@ -50,7 +50,7 @@ export class CartComponent implements OnInit {
 
   sendOrder(order:OrderModel){
     order.state = OrderState.Pending;
-    this.service.sendOrder(order).subscribe(
+    this.orderService.changeOrderState(order).subscribe(
       res => { 
         window.alert("Order Sended successfully!");
         window.location.reload();
@@ -63,7 +63,7 @@ export class CartComponent implements OnInit {
 
   cancelOrder(order:OrderModel){
     order.state = OrderState.Unrealized;
-    this.service.sendOrder(order).subscribe(
+    this.orderService.changeOrderState(order).subscribe(
       res => { 
         window.alert("Order Sended successfully!");
         window.location.reload();
@@ -75,7 +75,7 @@ export class CartComponent implements OnInit {
   }
 
   deleteOrder(orderId: number){
-    this.service.deleteOrder(orderId).subscribe(
+    this.orderService.deleteOrder(orderId).subscribe(
       res => {
         window.alert("Order Deleted");
         window.location.reload();
@@ -87,7 +87,7 @@ export class CartComponent implements OnInit {
   }
 
   removeProduct(id: number){
-    this.service.removeProduct(id).subscribe(
+    this.productService.removeProduct(id).subscribe(
       res => {
         window.alert("Order Deleted");
         window.location.reload();

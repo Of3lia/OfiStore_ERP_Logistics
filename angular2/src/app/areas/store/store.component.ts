@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StoreService } from './../../shared/store.service';
+import { ProductService } from './../../shared/product.service';
 import { ProductCategories } from './../../shared/enums/ProductCategories';
 import { ProductModel } from 'src/app/shared/models/product.model';
 
@@ -11,17 +11,17 @@ import { ProductModel } from 'src/app/shared/models/product.model';
 export class StoreComponent implements OnInit {
 
   constructor(
-    public service: StoreService
+    public productService: ProductService
   ) { }
 
   ngOnInit(): void {
-    this.service.getProducts().subscribe(
+    this.productService.getProducts().subscribe(
       res => { 
         // Product Data:
-        this.service.products = res;
+        this.productService.products = res;
 
         // Enum Category
-        this.service.products.forEach(element => {
+        this.productService.products.forEach(element => {
           element.categoryString = ProductCategories[element.category];
         });
       },
@@ -34,7 +34,7 @@ export class StoreComponent implements OnInit {
   addProductToCart(product:ProductModel, quantity: number){
     // We convert quantity in negative numbers so the API knows that it was to add the quantity to the existing one instead of assign a new quantity
     quantity = -quantity;
-    this.service.addProductToCart(product, quantity).subscribe(
+    this.productService.addProductToCart(product, quantity).subscribe(
       res => { 
         window.alert("Added product to the cart");
       },

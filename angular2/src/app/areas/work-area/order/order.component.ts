@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkAreaService } from 'src/app/shared/work-area.service';
-import { CartService } from 'src/app/shared/cart.service';
+import { OrderService } from 'src/app/shared/order.service';
 import { OrderState } from 'src/app/shared/enums/OrderState';
+import { OrderModel } from 'src/app/shared/models/order.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-order',
@@ -12,21 +13,20 @@ import { OrderState } from 'src/app/shared/enums/OrderState';
 export class OrderComponent implements OnInit {
 
   constructor(
-    public service: WorkAreaService,
-    public cartService: CartService,
+    public orderService: OrderService,
   ) { }
 
   ngOnInit(): void {
-    this.service.getOrder().subscribe(
+    this.orderService.getOrder().subscribe(
       res =>{
-        this.service.order = res;
+        this.orderService.order = res;
         try{
-        this.service.products = this.service.order.orderProducts;
+        this.orderService.products = this.orderService.order.orderProducts;
         } catch{}
-        console.log(this.service.order);
-        console.log(this.service.products);
+        // console.log(this.orderService.order);
+        // console.log(this.orderService.products);
         try{
-          this.service.order.state = OrderState[this.service.order.state];
+          this.orderService.order.state = OrderState[this.orderService.order.state];
         } catch {}
       },
       err => {
@@ -36,27 +36,43 @@ export class OrderComponent implements OnInit {
    }
 
    assignOrderToEmployee(){
-    this.service.assignOrderToEmplotee().subscribe(
+    this.orderService.assignOrderToEmployee().subscribe(
       res =>{
-        this.service.order = res;
+        this.orderService.order = res;
         window.location.reload();
       },
       err => {
-        console.log(err);
+        // console.log(err);
+        if(err.status == 404){
+          window.alert("There is no orders! Wait a few minutes")
+        }
       }
     )
    }
 
-   cancelOrder(){
-    this.service.order.state = OrderState.Pending;
-    this.storeService.sendOrder(order).subscribe(
+   deliverOrder(order:OrderModel){
+    order.state = OrderState.Delivering;
+    this.orderService.changeOrderState(order).subscribe(
       res => { 
         window.alert("Order Sended successfully!");
         window.location.reload();
       },
       err => {
         console.log(err);
-      }
+      }, 
     )
   }
+
+  finishOrder(order:OrderModel){
+   order.state = OrderState.Finished;
+   this.orderService.changeOrderState(order).subscribe(
+     res => { 
+       window.alert("Order Sended successfully!");
+       window.location.reload();
+     },
+     err => {
+       console.log(err);
+     }
+   )
+ }
 }

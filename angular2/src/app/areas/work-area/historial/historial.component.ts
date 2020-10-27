@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from './../../../shared/order.service'
+import { OrderModel } from 'src/app/shared/models/order.model';
+import { OrderState } from 'src/app/shared/enums/OrderState';
 
 @Component({
   selector: 'app-historial',
@@ -8,9 +11,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistorialComponent implements OnInit {
 
-  constructor() { }
+  orders;
+
+  constructor(
+    public orderService: OrderService,
+
+  ) { }
 
   ngOnInit(): void {
+    this.getOrderHistorial();
   }
 
+  getOrderHistorial(){
+    this.orderService.getOrderHistorialEmployee().subscribe(
+      res =>{
+        this.orders = res;
+        console.log(this.orders);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
 }

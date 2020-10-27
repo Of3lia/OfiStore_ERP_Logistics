@@ -1,4 +1,4 @@
-<div *ngFor="let order of service.orders">
+<div *ngFor="let order of orderService.orders">
     <h3>Order Id: #{{order.id}}</h3>
     <h3>Order State: {{order.state}}</h3>
     <div *ngFor="let prod of order.orderProducts">
