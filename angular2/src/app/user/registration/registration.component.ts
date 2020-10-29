@@ -19,25 +19,25 @@ export class RegistrationComponent implements OnInit {
   onSubmit(){
     this.service.register().subscribe(
       (res:any) => {
-        if(res.succeeded){
+        // if(res.succeeded){
           window.alert("Register Successful");
           this.service.formModel.reset();
-        }
-        else{
-          res.errors.forEach(element => {
-            switch (element.code){
-              case 'DuplicateUserName':
-                // Username is already taken
-                window.alert("Duplicated name");
-                break;
+        // }
+        // else{
+        //   res.errors.forEach(element => {
+        //     switch (element.code){
+        //       case 'DuplicateUserName':
+        //         // Username is already taken
+        //         window.alert("Duplicated name");
+        //         break;
               
-              default:
-                //Registration failed
-                window.alert("Unknown error, register failed");
-                break;
-            }
-          });
-        }
+        //       default:
+        //         //Registration failed
+        //         window.alert("Unknown error, register failed");
+        //         break;
+        //     }
+        //   });
+        // }
       },
       err => {
         console.log(err);

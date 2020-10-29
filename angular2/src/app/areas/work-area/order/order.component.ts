@@ -42,7 +42,7 @@ export class OrderComponent implements OnInit {
         window.location.reload();
       },
       err => {
-        // console.log(err);
+        console.log(err);
         if(err.status == 404){
           window.alert("There is no orders! Wait a few minutes")
         }

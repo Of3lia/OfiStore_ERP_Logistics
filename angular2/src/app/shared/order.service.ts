@@ -29,8 +29,7 @@ export class OrderService {
   }
 
   deleteOrder(orderId: number){
-    var body = { id: orderId}
-    return this.http.post(this.generalService.BaseURI + '/Orders/DeleteOrder', body)
+    return this.http.delete(this.generalService.BaseURI + '/Orders/' + orderId)
   }
 
   // Work-Area

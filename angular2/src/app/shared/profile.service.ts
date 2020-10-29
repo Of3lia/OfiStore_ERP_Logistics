@@ -27,7 +27,7 @@ export class ProfileService {
   });
 
   getUserProfile(){
-    return this.http.get(this.generalService.BaseURI + '/UserProfile');
+    return this.http.get(this.generalService.BaseURI + '/ApplicationUsers/UserProfile');
   }
 
   putUser(){
@@ -37,7 +37,7 @@ export class ProfileService {
       fullName : this.formModel.value.fullName,
       email : this.formModel.value.email,
     }
-    return this.http.put(this.generalService.BaseURI + "/users", body);
+    return this.http.put(this.generalService.BaseURI + "/ApplicationUsers/" + body.id, body);
   }
 
   // Address
@@ -56,7 +56,7 @@ export class ProfileService {
       email : user.email,
       role: user.role,
     }
-    return this.http.put(this.generalService.BaseURI + "/users", body);
+    return this.http.put(this.generalService.BaseURI + "/applicationusers/" + body.id , body);
   }
 
   deleteUser(id:string){

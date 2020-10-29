@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserModel } from './../../../shared/models/user.model'
 import { UserRoles } from './../../../shared/enums/UserRoles'
 import { ProfileService } from './../../../shared/profile.service'
+import { GeneralService  } from './../../../shared/general.service'
 
 @Component({
   selector: 'app-all-users',
@@ -25,6 +26,7 @@ export class AllUsersComponent implements OnInit {
   constructor(
     private http: HttpClient,
     public profileService: ProfileService,
+    public generalService: GeneralService,
   ) 
   { }
 
@@ -41,7 +43,7 @@ export class AllUsersComponent implements OnInit {
       Take : this.take
     }
 
-    this.http.post('https://localhost:44369/api' + "/users/GetUsersList", body)
+    this.http.post(this.generalService.BaseURI + "/ApplicationUsers/GetUsersList", body)
     .toPromise()
     .then(res => this.list = res as UserModel[]);
   }
