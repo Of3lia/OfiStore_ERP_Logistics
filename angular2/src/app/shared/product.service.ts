@@ -15,9 +15,8 @@ export class ProductService {
     private http: HttpClient,
   ) { }
 
-  removeProduct(productId: number){
-    var body = { id: productId}
-    return this.http.post(this.generalService.BaseURI + '/OrderProducts/RemoveProduct', body)
+  removeProduct(orderProductId: number){
+    return this.http.delete(this.generalService.BaseURI + '/OrderProducts/' + orderProductId)
   }
 
   addProductToCart(product:ProductModel, quantity:number){

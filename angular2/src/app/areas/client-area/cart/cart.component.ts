@@ -5,6 +5,7 @@ import { ProductService } from './../../../shared/product.service';
 import { ProductModel } from 'src/app/shared/models/product.model';
 import { ProductCategories } from 'src/app/shared/enums/ProductCategories';
 import { OrderModel } from 'src/app/shared/models/order.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -16,6 +17,7 @@ export class CartComponent implements OnInit {
   constructor(
     public orderService: OrderService,
     public productService: ProductService,
+    private toastr:ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -39,8 +41,8 @@ export class CartComponent implements OnInit {
   updateCart(product:ProductModel, quantity: number){
     this.productService.addProductToCart(product, quantity).subscribe(
       res => { 
-        window.alert("Cart Updated");
-        this.orderService.products = res;
+        this.toastr.success("Cart Updated");
+        window.location.reload();
       },
       err => {
         console.log(err);
@@ -86,8 +88,8 @@ export class CartComponent implements OnInit {
     )
   }
 
-  removeProduct(id: number){
-    this.productService.removeProduct(id).subscribe(
+  removeProduct(orderProductId: number){
+    this.productService.removeProduct(orderProductId).subscribe(
       res => {
         window.alert("Order Deleted");
         window.location.reload();
@@ -96,5 +98,13 @@ export class CartComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+  getTotalPrice(index:number){
+    let result:number = 0;
+    for(var i = 0; i < this.orderService.orders[index].orderProducts.length; i++){
+      result += (this.orderService.orders[index].orderProducts[i].product.price * this.orderService.orders[index].orderProducts[i].quantity);
+    }
+    return result;
   }
 }

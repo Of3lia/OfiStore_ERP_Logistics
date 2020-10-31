@@ -26,7 +26,6 @@ export class HistorialComponent implements OnInit {
     this.orderService.getOrderHistorialEmployee().subscribe(
       res =>{
         this.orders = res;
-        console.log(this.orders);
       },
       err => {
         console.log(err);

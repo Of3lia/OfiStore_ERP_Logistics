@@ -72,8 +72,8 @@ export class AllUsersComponent implements OnInit {
   }
 
   sendUser(user:UserModel){
-    this.userData.id = user.id;
-    console.log(this.userData);
+    //this.userData.id = user.id;
+    //console.log(this.userData);
     this.profileService.editUser(this.userData).subscribe(
       res =>{
         window.alert("Edit succeed");

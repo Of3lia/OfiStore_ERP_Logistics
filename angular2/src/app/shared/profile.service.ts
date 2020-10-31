@@ -36,8 +36,9 @@ export class ProfileService {
       userName : this.formModel.value.userName,
       fullName : this.formModel.value.fullName,
       email : this.formModel.value.email,
+      role : this.userDownloadedData.role
     }
-    return this.http.put(this.generalService.BaseURI + "/ApplicationUsers/" + body.id, body);
+    return this.http.put(this.generalService.BaseURI + "/ApplicationUsers/UpdateUser", body);
   }
 
   // Address
@@ -56,12 +57,12 @@ export class ProfileService {
       email : user.email,
       role: user.role,
     }
-    return this.http.put(this.generalService.BaseURI + "/applicationusers/" + body.id , body);
+    return this.http.put(this.generalService.BaseURI + "/applicationusers/UpdateUser", body);
   }
 
   deleteUser(id:string){
     window.alert(id);
-    return this.http.delete(this.generalService.BaseURI + "/users/" + id);
+    return this.http.delete(this.generalService.BaseURI + "/Applicationusers/" + id);
   }
 
 }

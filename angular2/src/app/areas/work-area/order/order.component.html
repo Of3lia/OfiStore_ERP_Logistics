@@ -3,10 +3,10 @@
 
 
 <div *ngIf='orderService.order!=null'>
-    <h3>Order Id: #{{orderService.order.id}}</h3>
+    <h4>Order Id: #{{orderService.order.id}}</h4>
     <p>Order State: {{orderService.order.state}}</p>
     <p>Date Started: {{orderService.order.dateStarted}}</p>
-    <h3>Products:</h3>
+    <h4>Products:</h4>
     <div *ngFor="let product of orderService.products">
         <p>Id: {{product.product.id}}</p>
         <p>Product Name: {{product.product.name}}</p>

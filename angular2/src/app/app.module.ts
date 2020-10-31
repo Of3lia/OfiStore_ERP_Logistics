@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+import {ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
@@ -22,6 +24,8 @@ import { StoreComponent } from './areas/store/store.component';
 import { HistorialComponent } from './areas/work-area/historial/historial.component';
 import { OrderComponent } from './areas/work-area/order/order.component';
 import { AllUsersComponent } from './areas/admin-area/all-users/all-users.component';
+// import { LineChartComponent } from './areas/admin-area/line-chart/line-chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -41,13 +45,17 @@ import { AllUsersComponent } from './areas/admin-area/all-users/all-users.compon
     HistorialComponent,
     OrderComponent,
     AllUsersComponent,
+    // LineChartComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ChartsModule,
   ],
   providers: [
     UserService, {

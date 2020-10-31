@@ -25,8 +25,8 @@
         <td *ngIf='user.role==0'>Admin</td>
         <td *ngIf='user.role==1'>Employee</td>
         <td *ngIf='user.role==2'>Customer</td>
-        <th><button (click)="editUser(i, user)">Edit</button></th>
-        <th><button (click)="deleteUser(user.id)">Delete</button></th>
+        <th><button (click)="editUser(i, user)" class="btn-primary">Edit</button></th>
+        <th><button (click)="deleteUser(user.id)" class="btn-danger">Delete</button></th>
         </ng-template>
         <ng-template [ngIf]="editIndex==i">
             <td><input placeholder="Username" [(ngModel)]="userData.userName"></td>
@@ -37,13 +37,14 @@
                 <option [ngValue]="1">Employee</option>
                 <option [ngValue]="0">Admin</option>
             </select>
-            <th><button type="button" (click)="sendUser(user)">Save</button></th>
-            <th><button (click)="editIndex=null">Cancel</button></th>
+            <th><button type="button" (click)="sendUser(user)" class="btn-success">Save</button></th>
+            <th><button (click)="editIndex=null" class="btn-warning">Cancel</button></th>
         </ng-template>
     </tr>
 
-    <h3>Page {{currentPage}}</h3>
-
-    <button (click)='lastPage()' [disabled]='currentPage<=1'>Last Page</button>
-    <button (click)='nextPage()' [disabled]='list.length<=9'>Next Page</button>
+    <div class="row">
+        <button class="col-sm" (click)='lastPage()' [disabled]='currentPage<=1' style="width: 6em; height: 2.5em;">Last Page</button>
+        <h4 class="col-sm">Page {{currentPage}}</h4>
+        <button class="col-sm" (click)='nextPage()' [disabled]='list.length<=9'  style="width: 8em; height: 2.5em;">Next Page</button>
+    </div>
 </table>

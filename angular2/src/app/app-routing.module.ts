@@ -16,21 +16,17 @@ import { OrderComponent } from './areas/work-area/order/order.component';
 import { HistorialComponent } from './areas/work-area/historial/historial.component';
 
 const routes: Routes = [
-  {path:'',redirectTo:'/user/login', pathMatch:'full'},
-  {
-    path:'user',component:UserComponent,
-    children:[
-     {path:'registration',component:RegistrationComponent}, // /user/registration
-      {path:'login',component:LoginComponent} // /user/login 
-    ]
-  },
-   {path:'home',component:HomeComponent, canActivate:[AuthGuard], children:[
+  {path:'',redirectTo:'/home/store', pathMatch:'full'},
+ 
+   {path:'home',component:HomeComponent, children:[
+     {path:'registration',component:RegistrationComponent}, //registration
+     {path:'login',component:LoginComponent}, //user/login 
      {path:'store',component:StoreComponent},
-     {path:'profile',component:ProfileComponent},
-     {path:'client-area',component:ClientAreaComponent, children:[
+     {path:'profile',component:ProfileComponent, canActivate:[AuthGuard]},
+     {path:'client-area',component:ClientAreaComponent, canActivate:[AuthGuard], children:[
        {path:'cart', component:CartComponent}
      ]},
-     {path:'work-area',component:WorkAreaComponent, children:[
+     {path:'work-area',component:WorkAreaComponent, canActivate:[AuthGuard], children:[
        {path:'order', component:OrderComponent},
        {path:'historial', component:HistorialComponent}
      ]},

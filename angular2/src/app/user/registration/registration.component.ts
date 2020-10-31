@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/shared/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +11,8 @@ import { UserService } from 'src/app/shared/user.service';
 export class RegistrationComponent implements OnInit {
 
   constructor(
-    public service: UserService
+    public service: UserService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -20,8 +22,10 @@ export class RegistrationComponent implements OnInit {
     this.service.register().subscribe(
       (res:any) => {
         // if(res.succeeded){
-          window.alert("Register Successful");
+          this.toastr.success('Registered succeessfully', 'Good!');
           this.service.formModel.reset();
+          setTimeout(function(){  window.location.replace('/home/login'); }, 1000);
+         
         // }
         // else{
         //   res.errors.forEach(element => {
@@ -40,6 +44,8 @@ export class RegistrationComponent implements OnInit {
         // }
       },
       err => {
+        this.toastr.error('Name is already taken', 'Error!');
+
         console.log(err);
       }
     );

@@ -1,8 +1,13 @@
-<div *ngFor="let product of productService.products">
-    <h3>{{product.name}}</h3>
-    <p>{{product.description}}</p>
-    <p>{{product.price | currency}}</p>
-    <p>Category: {{product.categoryString}}</p>
-    <p>Quantity: <input type="number" #quantity value="1" required min="1">
-    <button type="button" (click)="addProductToCart(product, quantity.value)">Add to Cart</button></p>
+<div style="margin: auto;">
+    <div class="card" id="products" style="width: 18rem;" *ngFor="let product of productService.products">
+        <img class="card-img-top" src="./../../../assets/img/sea-1377712_1920.jpg" alt="Card image cap">
+        <div class="card-body">
+            <h3 class="card-title" id="producttitle">{{product.name}}</h3>
+            <p class="card-text" id="producttext">{{product.description}}</p>
+            <p>{{product.price | currency}}</p>
+            <p>Category: {{product.categoryString}}</p>
+            <h6>Quantity:</h6><input type="number" autocomplete="off" #quantity value="1" required min="1" id="productQuantity">
+            <button id="addproductbutton" class="btn btn-primary" type="button" (click)="addProductToCart(product, quantity.value)">Add to Cart</button>
+        </div>
+    </div>
 </div>

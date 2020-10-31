@@ -3,6 +3,7 @@ import { OrderService } from 'src/app/shared/order.service';
 import { OrderState } from 'src/app/shared/enums/OrderState';
 import { OrderModel } from 'src/app/shared/models/order.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order',
@@ -14,6 +15,7 @@ export class OrderComponent implements OnInit {
 
   constructor(
     public orderService: OrderService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -42,9 +44,11 @@ export class OrderComponent implements OnInit {
         window.location.reload();
       },
       err => {
-        console.log(err);
         if(err.status == 404){
-          window.alert("There is no orders! Wait a few minutes")
+          this.toastr.warning('There is no orders! Wait a few minutes', 'Hmm..!');
+        }
+        else{
+          console.log(err);
         }
       }
     )
@@ -54,7 +58,6 @@ export class OrderComponent implements OnInit {
     order.state = OrderState.Delivering;
     this.orderService.changeOrderState(order).subscribe(
       res => { 
-        window.alert("Order Sended successfully!");
         window.location.reload();
       },
       err => {
@@ -67,7 +70,6 @@ export class OrderComponent implements OnInit {
    order.state = OrderState.Finished;
    this.orderService.changeOrderState(order).subscribe(
      res => { 
-       window.alert("Order Sended successfully!");
        window.location.reload();
      },
      err => {

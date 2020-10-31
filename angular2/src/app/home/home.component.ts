@@ -10,20 +10,29 @@ export class HomeComponent implements OnInit {
 
   userDetails;
   role:string;
+  logged: boolean;
 
   constructor(
     private router:Router
   ) { }
 
   ngOnInit(): void {
-        // Get user role from JWT
-        this.role = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).role;
-  
+    this.getUserRoleFromJwt();
   }
     
   onLogout(){
     localStorage.removeItem('token');
-    this.router.navigate(['/user/login']);
+    window.location.replace("home/store");
+    // this.router.navigate(['/user/login']);
   }
 
+  getUserRoleFromJwt(){
+    // Get user role from JWT
+    if(localStorage.getItem('token') != null){
+      this.logged = true;
+      this.role = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).role;
+    }else{
+      this.logged = false;
+    }
+  }
 }
