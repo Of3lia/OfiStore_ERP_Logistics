@@ -54,8 +54,8 @@ export class CartComponent implements OnInit {
     order.state = OrderState.Pending;
     this.orderService.changeOrderState(order).subscribe(
       res => { 
-        window.alert("Order Sended successfully!");
         window.location.reload();
+        this.toastr.success("Order Sent Successfully")
       },
       err => {
         console.log(err);
@@ -67,7 +67,7 @@ export class CartComponent implements OnInit {
     order.state = OrderState.Unrealized;
     this.orderService.changeOrderState(order).subscribe(
       res => { 
-        window.alert("Order Sended successfully!");
+        this.toastr.warning("Order Canceled")
         window.location.reload();
       },
       err => {
@@ -79,7 +79,7 @@ export class CartComponent implements OnInit {
   deleteOrder(orderId: number){
     this.orderService.deleteOrder(orderId).subscribe(
       res => {
-        window.alert("Order Deleted");
+        this.toastr.warning('Order Deleted');
         window.location.reload();
       },
       err =>{

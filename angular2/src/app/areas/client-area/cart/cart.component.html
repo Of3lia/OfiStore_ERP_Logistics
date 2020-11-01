@@ -8,7 +8,7 @@
         <h5 class="card-title d-flex justify-content-center">{{prod.product.name}}</h5 >
         
         <div class="row">
-            <img class="card-img-top col-sm" src="./../../../assets/img/sea-1377712_1920.jpg" alt="Card image cap" style="max-width: 10em; max-height: 5em;">
+            <img class="card-img-top col-sm" src="{{prod.product.imageUrl}}" alt="Card image cap" style="max-width: 10em; max-height: 5em;">
 
             <p class="card-text col-sm">{{prod.product.description}}</p>
             <p  class="col-sm">Price {{prod.product.price | currency}}</p>

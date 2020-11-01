@@ -7,7 +7,7 @@
             <li>City:  {{service.address.city}}</li>
             <li>Country:  {{service.address.country}}</li>
             <li>Postal Code:  {{service.address.postalCode}}</li>
-            <button (click)="editAddress()">Edit Address</button>
+            <button (click)="editAddress()"  class="btn btn-primary" style="max-width: 10em;">Edit Address</button>
         </ul>
     </ng-template>
     <ng-template [ngIf]="edit==true">
@@ -19,8 +19,8 @@
                 <li>City: <input placeholder="city" value="{{service.address.city}}" name="city" #city="ngModel" [(ngModel)]="service.address.city" required></li>
                 <li>Country: <input placeholder="country" value="{{service.address.country}}" name="country" #country="ngModel" [(ngModel)]="service.address.country" required></li>
                 <li>Postal Code: <input placeholder="postalCode" value="{{service.address.postalCode}}" name="postalCode" #postalCode="ngModel" [(ngModel)]="service.address.postalCode" required></li>
-                <button type="submit" [disabled]="form.invalid">Save</button>
-                <button (click)="edit=false" type="button">Cancel</button>
+                <button type="submit" [disabled]="form.invalid"  class="btn btn-success" style="max-width: 10em;">Save</button>
+                <button (click)="edit=false" type="button"  class="btn btn-danger" style="max-width: 10em;">Cancel</button>
             </ul>
         </form>
     </ng-template>

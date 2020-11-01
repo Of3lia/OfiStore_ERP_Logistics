@@ -45,7 +45,7 @@ export class StoreComponent implements OnInit {
       quantity = -quantity;
       this.productService.addProductToCart(product, quantity).subscribe(
         res => { 
-          this.toastr.success("Product added to the cart", "Cart");
+          this.toastr.success(Math.abs(quantity) + ' ' + product.name + " added to the cart", "Cart");
         },
         err => {
           console.log(err);

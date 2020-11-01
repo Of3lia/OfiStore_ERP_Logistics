@@ -24,7 +24,7 @@ import { StoreComponent } from './areas/store/store.component';
 import { HistorialComponent } from './areas/work-area/historial/historial.component';
 import { OrderComponent } from './areas/work-area/order/order.component';
 import { AllUsersComponent } from './areas/admin-area/all-users/all-users.component';
-// import { LineChartComponent } from './areas/admin-area/line-chart/line-chart.component';
+import { LineChartComponent } from './areas/admin-area/line-chart/line-chart.component';
 import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
@@ -45,7 +45,7 @@ import { ChartsModule } from 'ng2-charts';
     HistorialComponent,
     OrderComponent,
     AllUsersComponent,
-    // LineChartComponent,
+    LineChartComponent,
   ],
   imports: [
     BrowserModule,
