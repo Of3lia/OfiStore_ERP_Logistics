@@ -1,0 +1,50 @@
+<h2>Users:</h2>
+
+<select [(ngModel)]='selectedRole' (ngModelChange)='changeRole()'>
+    <option [ngValue]='3'>All</option>
+    <option [ngValue]='0'>Admins</option>
+    <option [ngValue]='1'>Employees</option>
+    <option [ngValue]='2'>Customers</option>
+</select>
+
+<input type="text" placeholder="Username" [(ngModel)]='searchUserName' (ngModelChange)='refreshList()'>
+
+<table>
+    <tr>
+        <th>User Name</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Role</th>
+    </tr>
+    <tr  *ngFor="let user of list; let i = index">
+
+        <ng-template [ngIf]="editIndex!=i">
+        <td>{{user.userName}}</td>
+        <td>{{user.fullName}}</td>
+        <td>{{user.email}}</td>
+        <td *ngIf='user.role==0'>Admin</td>
+        <td *ngIf='user.role==1'>Employee</td>
+        <td *ngIf='user.role==2'>Customer</td>
+        <th><button (click)="editUser(i, user)" class="btn-primary">Edit</button></th>
+        <th><button (click)="deleteUser(user.id)" class="btn-danger">Delete</button></th>
+        </ng-template>
+        <ng-template [ngIf]="editIndex==i">
+            <td><input placeholder="Username" [(ngModel)]="userData.userName"></td>
+            <td><input placeholder="Full Name" [(ngModel)]="userData.fullName"></td>
+            <td><input placeholder="Email" [(ngModel)]="userData.email"></td>
+            <select [(ngModel)]="userData.role">
+                <option [ngValue]="2">Customer</option>
+                <option [ngValue]="1">Employee</option>
+                <option [ngValue]="0">Admin</option>
+            </select>
+            <th><button type="button" (click)="sendUser(user)" class="btn-success">Save</button></th>
+            <th><button (click)="editIndex=null" class="btn-warning">Cancel</button></th>
+        </ng-template>
+    </tr>
+
+    <div class="row">
+        <button class="col-sm" (click)='lastPage()' [disabled]='currentPage<=1' style="width: 6em; height: 2.5em;">Last Page</button>
+        <h4 class="col-sm">Page {{currentPage}}</h4>
+        <button class="col-sm" (click)='nextPage()' [disabled]='list.length<=9'  style="width: 8em; height: 2.5em;">Next Page</button>
+    </div>
+</table>

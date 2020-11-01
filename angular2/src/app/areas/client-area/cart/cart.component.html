@@ -1,0 +1,39 @@
+<div class="card mb-2 border-dark continer" *ngFor="let order of orderService.orders; let i = index"  style="max-width: 1350px; padding: 2%; background-color:rgb(218, 241, 212);margin: auto;">
+    
+    <h4 class="d-flex justify-content-center">Order Id: #{{order.id}}</h4>
+    <h4 class="d-flex justify-content-center">State: {{order.state}}</h4>
+
+    <div class="card mb-2 border-dark continer" style="background-color:rgb(180, 220, 190); padding: 2%; max-height: 15em;" *ngFor="let prod of order.orderProducts">
+        <!-- <h4>Product Id {{prod.product.id}}</h4> -->
+        <h5 class="card-title d-flex justify-content-center">{{prod.product.name}}</h5 >
+        
+        <div class="row">
+            <img class="card-img-top col-sm" src="{{prod.product.imageUrl}}" alt="Card image cap" style="max-width: 10em; max-height: 5em;">
+
+            <p class="card-text col-sm">{{prod.product.description}}</p>
+            <p  class="col-sm">Price {{prod.product.price | currency}}</p>
+            <p class="col-sm" [hidden]="order.state=='Unrealized'">Quantity: {{prod.quantity}}</p>
+            <p [hidden]="order.state!='Unrealized'">Quantity: </p> 
+            
+            <div class="col-sm" [hidden]="order.state!='Unrealized'" >
+                <input type="number" autocomplete="false" #quantity value={{prod.quantity}} required min="1"> 
+
+                <div style="margin: 5%;">
+                    <button class="btn btn-primary" style="margin: 2%; width: 10em;" type="button" (click)="updateCart(prod.product, quantity.value)">Update</button>
+                    <button class="btn btn-danger" style="margin: 2%; width: 10em;" type="button" (click)="removeProduct(prod.id)">Remove Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p *ngIf="order.orderProducts.length <= 0">No products on this order so far! Go to the store to start adding products to the cart!</p>
+
+    <h4 class="card mb-2 border-dark continer" style="background-color:rgb(180, 220, 190); padding: 2%; text-align: center;" >Total Price: {{ getTotalPrice(i) | currency}}</h4>
+
+    <div style="width: 80%; margin-left: 10%;">
+        <div class="col-sm" style="display: inline-block; width: 50%;" *ngIf="order.state=='Unrealized' && order.orderProducts.length > 0"><button class="btn btn-success col-sm" type="button" (click)="sendOrder(order)">Send Order!</button></div>
+        <div class="col-sm" style="display: inline-block; width: 50%" *ngIf="order.state=='Pending'"><button type="button" (click)="cancelOrder(order)" class="btn btn-warning col-sm" >Cancel And Edit Order</button></div>
+        <div class="col-sm" style="display: inline-block; width: 50%"  *ngIf="order.state=='Pending' || order.state=='Unrealized'"><button type="button" class="btn btn-danger col-sm" (click)="deleteOrder(order.id)">Delete Order</button></div>
+    </div>
+</div>
+
+<p *ngIf="orderService.orders.length <= 0">No orders! Go to the <b>Store</b> and add products to your cart.</p>

@@ -1,0 +1,27 @@
+<div *ngIf="service.userDownloadedData" class="form-group">
+    <ul>
+        <li> <b>Id: </b>{{service.userDownloadedData.id}}</li>
+        <li> <b>Role:</b> {{service.userDownloadedData.role}}</li>
+        <ng-template [ngIf]="!edit">
+            <li> <b>Username: </b>{{service.userDownloadedData.userName}}</li>
+            <li> <b>Full Name: </b>{{service.userDownloadedData.fullName}}</li>
+            <li> <b>Email:</b> {{service.userDownloadedData.email}}</li>
+            <button (click)="editProfile()" class="btn btn-primary" style="max-width: 10em;">Edit Profile</button>
+        </ng-template>
+        <ng-template [ngIf]="edit">
+            <form [formGroup]="service.formModel" (submit)="onSubmit()">
+                <h6>Username: <input class="form-control" placeholder="Username" formControlName="userName" required></h6>
+                <label *ngIf="service.formModel.get('userName').errors?.required">This field is mandatory</label>
+
+                <h6>Full Name: <input class="form-control" placeholder="Full Name" formControlName="fullName"></h6>
+
+                <h6>Email: <input class="form-control" placeholder="Email" formControlName="email"></h6>
+                <label *ngIf="service.formModel.get('email').touched && service.formModel.get('email').errors?.email">Email not valid</label>
+
+                <button  [disabled]="!service.formModel.valid" type="submit" class="btn btn-success" style="max-width: 10em;">Save</button>
+                <button type="button" (click)="cancelEdit()" class="btn btn-danger" style="max-width: 10em;">Cancel</button>
+            </form>
+        </ng-template>
+    </ul>
+    <app-address></app-address>
+</div>
