@@ -102,7 +102,7 @@ export class LineChartComponent implements OnInit {
   }
 
   getOrders(){
-    this.orderService.getOrders().subscribe(
+    this.orderService.getOrdersByAdmin().subscribe(
       res => {
         this.orders = res;
         // console.log(this.orders);
