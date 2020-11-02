@@ -4,6 +4,7 @@ import { UserModel } from './../../../shared/models/user.model'
 import { UserRoles } from './../../../shared/enums/UserRoles'
 import { ProfileService } from './../../../shared/profile.service'
 import { GeneralService  } from './../../../shared/general.service'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-all-users',
@@ -27,6 +28,7 @@ export class AllUsersComponent implements OnInit {
     private http: HttpClient,
     public profileService: ProfileService,
     public generalService: GeneralService,
+    private toastr: ToastrService,
   ) 
   { }
 
@@ -76,7 +78,7 @@ export class AllUsersComponent implements OnInit {
     //console.log(this.userData);
     this.profileService.editUser(this.userData).subscribe(
       res =>{
-        window.alert("Edit succeed");
+        this.toastr.success("Edit succeed", "Admin");
         window.location.reload();
       },
       err => {
@@ -86,15 +88,16 @@ export class AllUsersComponent implements OnInit {
   }
 
   deleteUser(id:string){
-    this.profileService.deleteUser(id).subscribe(
-      res =>{
-        window.alert("Delete succeed");
-        window.location.reload();
-      },
-      err => {
-        console.log(err);
-      }
-    )
+    this.toastr.error("For security reasons you cant delete users", "Admin Of Admins");
+    // this.profileService.deleteUser(id).subscribe(
+    //   res =>{
+    //     window.alert("Delete succeed");
+    //     window.location.reload();
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // )
   }
 
 }

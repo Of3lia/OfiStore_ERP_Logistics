@@ -1,6 +1,6 @@
 <div style="margin: auto;">
-    <div class="card" id="products" style="width: 18rem;" *ngFor="let product of productService.products">
-        <img class="card-img-top" src="{{product.imageUrl}}" alt="Card image cap"  style="">
+    <div class="card" id="products" style="max-width: 20em;" *ngFor="let product of productService.products">
+        <img class="card-img-top" src="{{product.imageUrl}}" alt="Card image cap">
         <div class="card-body">
             <h3 class="card-title" id="producttitle">{{product.name}}</h3>
             <p class="card-text" id="producttext">{{product.description}}</p>

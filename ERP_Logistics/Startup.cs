@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ERP_Logistics.Data.DummyData;
+using ERP_Logistics.Data.Repositories;
 using ERP_Logistics.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,27 +37,19 @@ namespace ERP_Logistics
 
             services.AddControllers();
 
-            services.AddDbContext<AuthenticationContext>(options =>
+            services.AddDbContext<StoreContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
-
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<IdentityRole>()
-               .AddEntityFrameworkStores<AuthenticationContext>();
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 4;
-            }
-        );
 
             services.AddCors();
 
-            //Jwt Authentication
+            // Add Repository
+            services.AddScoped<AddressRepository>();
+            services.AddScoped<ApplicationUserRepository>();
+            services.AddScoped<OrderProductRepository>();
+            services.AddScoped<OrderRepository>();
+            services.AddScoped<ProductRepository>();
 
+            //Jwt Authentication
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
 
             services.AddAuthentication(x =>
@@ -77,6 +70,18 @@ namespace ERP_Logistics
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
+                config.AddPolicy(Policies.Employee, Policies.EmployeePolicy());
+                config.AddPolicy(Policies.Customer, Policies.CustomerPolicy());
+            });
+
+            // This service fixes an error i get when i try to include in entity framework. MESSAGE ERROR: System.Text.Json.JsonException: A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32. at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_SerializerCycleDetected(Int32 maxDepth) at System.Text.Json.JsonSerializer.Write(Utf8JsonWriter writer, Int32 originalWriterDepth, Int32 flushThreshold, JsonSerializerOptions options, WriteStack& state)
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -113,6 +118,8 @@ namespace ERP_Logistics
             {
                 endpoints.MapControllers();
             });
+
+            DummyData.CreateDummy(app);
         }
     }
 }

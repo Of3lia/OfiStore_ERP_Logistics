@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace ERP_Logistics.Models
 {
-    public class Client : ApplicationUser
+    public class OrderEmployee
     {
+        public int Id { get; set; }
+        public ApplicationUser Employee { get; set; }
     }
 }

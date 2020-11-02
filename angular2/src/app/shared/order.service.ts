@@ -44,4 +44,8 @@ export class OrderService {
   getOrderHistorialEmployee(){
     return this.http.get(this.generalService.BaseURI + '/Orders/GetOrderHistorialEmployee');
   }
+
+  getOrdersByAdmin(){
+    return this.http.get(this.generalService.BaseURI + '/Orders/GetOrdersByAdmin');
+  }
 }

@@ -44,7 +44,7 @@ export class RegistrationComponent implements OnInit {
         // }
       },
       err => {
-        this.toastr.error('Name is already taken', 'Error!');
+        this.toastr.error('Ups.. there is a problem, try changing your username', 'Error!');
 
         console.log(err);
       }

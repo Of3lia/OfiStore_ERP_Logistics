@@ -79,7 +79,7 @@ export class CartComponent implements OnInit {
   deleteOrder(orderId: number){
     this.orderService.deleteOrder(orderId).subscribe(
       res => {
-        this.toastr.warning('Order Deleted');
+        this.toastr.warning('Order Deleted', "Cart");
         window.location.reload();
       },
       err =>{
@@ -91,7 +91,7 @@ export class CartComponent implements OnInit {
   removeProduct(orderProductId: number){
     this.productService.removeProduct(orderProductId).subscribe(
       res => {
-        window.alert("Order Deleted");
+        this.toastr.success("Product Removed", "Cart");
         window.location.reload();
       },
       err =>{
