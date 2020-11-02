@@ -12,7 +12,7 @@ namespace ERP_Logistics.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public ValuesController(AuthenticationContext context)
+        public ValuesController(StoreContext context)
         {
 
         }
@@ -21,7 +21,7 @@ namespace ERP_Logistics.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", UserRoles.Admin.ToString() };
         }
 
         // GET api/values/5

@@ -6,104 +6,76 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ERP_Logistics.Models;
+using ERP_Logistics.Data.Repositories;
 
 namespace ERP_Logistics.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrdersController : GenericController<Order, OrderRepository>
     {
-        private readonly AuthenticationContext _context;
+        public readonly OrderRepository repository;
 
-        public OrdersController(AuthenticationContext context)
+        public OrdersController(OrderRepository repository) : base(repository)
         {
-            _context = context;
+            this.repository = repository;
         }
 
-        // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        [Route("GetOrderByClient")]
+        public async Task<IList<Order>> GetOrderByClient()
         {
-            return await _context.Orders.ToListAsync();
+            string userid = User.Claims.First(c => c.Type == "userid").Value;
+            return await repository.GetOrderByClient(userid);
         }
 
-        // GET: api/Orders/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        [HttpGet]
+        [Route("GetOrderByEmployee")]
+        public async Task<Order> GetOrderByEmployee()
         {
-            var order = await _context.Orders.FindAsync(id);
+            string userid = User.Claims.First(c => c.Type == "userid").Value;
 
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return order;
+            var result = await repository.GetOrderByEmployee(userid);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetOrdersByAdmin")]
+        public async Task<List<Order>> GetOrdersByAdmin()
+        {
+            var result = await repository.GetOrdersByAdmin();
+            return result;
         }
 
-        // PUT: api/Orders/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        [HttpGet]
+        [Route("GetOrderHistorialEmployee")]
+        public async Task<IList<Order>> GetOrderHistorialEmployee()
         {
-            if (id != order.Id)
-            {
-                return BadRequest();
-            }
+            string userid = User.Claims.First(c => c.Type == "userid").Value;
 
-            _context.Entry(order).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return await repository.GetOrderHistorialEmployee(userid);
         }
 
-        // POST: api/Orders
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        [HttpGet]
+        [Route("AssignOrderToEmployee")]
+        public async Task<ActionResult<Order>> AssignOrderToEmployee()
         {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+            string userid = User.Claims.First(c => c.Type == "userid").Value;
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
-        }
+            var result = await repository.AssignOrderToEmployee(userid);
 
-        // DELETE: api/Orders/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int id)
-        {
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
+            if (result != null)
             {
-                return NotFound();
+                return Ok(result);
             }
-
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
+            return NotFound();
         }
 
-        private bool OrderExists(int id)
+        [HttpPut]
+        [Route("ChangeOrderState")]
+        public async Task<IActionResult> ChangeOrderState([FromBody] Order order)
         {
-            return _context.Orders.Any(e => e.Id == id);
+            var result = await repository.ChangeOrderState(order);
+            return Ok(result);
         }
     }
 }

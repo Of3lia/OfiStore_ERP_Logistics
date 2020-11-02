@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ERP_Logistics.Migrations
 {
-    [DbContext(typeof(AuthenticationContext))]
+    [DbContext(typeof(StoreContext))]
     [Migration("20201012131223_Orders")]
     partial class Orders
     {
