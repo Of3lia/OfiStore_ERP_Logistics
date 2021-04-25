@@ -36,6 +36,7 @@ export class CartComponent implements OnInit {
         console.log(err);
       }
     )
+    // console.log(this.orderService.products);
   }
 
   updateCart(product:ProductModel, quantity: number){
